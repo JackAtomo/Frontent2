@@ -1,0 +1,23 @@
+footer {
+  height: 12vh;
+  min-width: 600px;
+  min-height: 65px;
+  border: 1px solid lightblue;
+  display: flex;
+  color: white;
+  background-color: #2e86c1;
+  justify-content: space-around;
+}
+footer section {
+  display: flex;
+  margin: 20px;
+  font-size: 15px;
+  justify-content: space-between;
+}
+footer section p {
+  margin: auto;
+}
+footer section img {
+  width: 8vh;
+  height: 8vh;
+}

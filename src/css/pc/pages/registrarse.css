@@ -1,0 +1,37 @@
+main #registro{
+    padding: 50px;
+    text-align: center;
+}
+main #registro #regis{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border:none;
+    font-size: 20px;
+}
+
+main #registro #regis input, select{
+    display: block;
+    margin: auto;
+    background-color: #abddff;
+    border:none;
+    color: black;
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 5px;
+}
+main #registro #regis fieldset{
+    margin:20px;
+    padding: 50px;
+    background-color: #2e86c1;
+    color :white;
+}
+main #registrarse{
+    font-size: 20px;
+    background: #abddff;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  color:black;
+  border-radius:5px;
+}

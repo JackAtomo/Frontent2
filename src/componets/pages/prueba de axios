@@ -1,0 +1,51 @@
+import React, { componets } from "react";
+import axios from "axios";
+
+function Consultar() {
+  let res;
+  return (
+    <React.Fragment>
+      <form id="form_consultar" onSubmit={(res = onSubmit())}>
+        <fieldset className="grupo">
+          <label htmlFor="name">Nombre</label>
+          <input type="text" id="name" name="name" />
+          <label htmlFor="apellidos">Apellidos</label>
+          <input type="text" id="apellidos" name="apellidos" />
+          <label htmlFor="edad">Fecha de nacimiento</label>
+          <input type="date" id="edad" name="edad" />
+        </fieldset>
+        <fieldset className="grupo">
+          <label htmlFor="cod_postal">Codigo Postal</label>
+          <input type="number" id="cod_postal" />
+          <label htmlFor="pais">Lugar de nacimiento</label>
+          <select id="pasi">
+            <option>España</option>
+            <option>Otro</option>
+          </select>
+          <button type="">Enviar</button>
+        </fieldset>
+      </form>
+    </React.Fragment>
+  );
+}
+
+async function onSubmit() {
+  let name = document.getElementById("name").value;
+  let apellidos = document.getElementById("apellidos").value;
+  let edad = document.getElementById("edad").value;
+  let cod_postal = document.getElementById("cod_postal").value;
+  let pais = document.getElementById("pais").value;
+  let params = {
+    name: name,
+    apellidos: apellidos,
+    edad: edad,
+    cod_postal: cod_postal,
+    pais: pais
+  };
+
+  let res = await axios.post("http://localhost:3000/users/", params);
+
+  return res;
+}
+
+export default Consultar;

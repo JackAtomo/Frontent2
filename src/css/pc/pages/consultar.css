@@ -1,0 +1,84 @@
+main #form_consultar {
+  text-align: center;
+  justify-content: center;
+  padding-top: 100px;
+  display: flex;
+  margin: 10px;
+  font-size: 20px;
+}
+main .grupo {
+  justify-content: center;
+  text-align: center;
+  width: 400px;
+  border: lightblue 2px solid;
+  background-color: #2e86c1;
+  box-shadow: 0px 0px 10px 5px black;
+  margin:20px;
+}
+main #form_consultar .grupo label {
+  color: white;
+}
+
+main #form_consultar .grupo input {
+  display: block;
+  margin: auto;
+  background-color: #abddff;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+}
+main #form_consultar .grupo input[type=range]{
+  background-color: white;
+}
+
+main #form_consultar .grupo button {
+  margin-top: 10px;
+}
+
+#form_consultar input {
+  display: block;
+}
+#form_consultar select {
+  margin: auto;
+  display: block;
+}
+
+main #resultado{
+  padding: 20px;
+  width: 800px;
+  border: lightblue 2px solid;
+  background-color: #2e86c1;
+  box-shadow: 0px 0px 10px 5px black;
+  margin: auto;
+}
+main #resultado div{
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+
+
+}
+main #resultado fieldset {
+  border: none;
+  color: white;
+  text-align: center;
+
+}
+main #resultado input {
+  width: 50px;
+  font-size: 20px;
+  background: #2e86c1;
+  border: none;
+  display: block;
+  text-align: center;
+  margin: auto;
+  color: white;
+}
+main #resultado button {
+  background: #abddff;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  font-size: 15px;
+  color:black;
+}

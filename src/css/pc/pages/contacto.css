@@ -1,0 +1,15 @@
+#contacto {
+  padding: 0px;
+  height: 75vh;
+  display: flex;
+  justify-content: space-between;
+}
+main .partida {
+  margin: auto;
+  max-width: 75vh;
+}
+main .partida iframe{
+  width: 600px;
+  height: 400px;
+  border:0;
+}

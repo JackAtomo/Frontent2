@@ -1,0 +1,33 @@
+body {
+  margin: 0px;
+}
+main {
+  height: 74vh;
+}
+header {
+  border: 1px solid blue;
+  background: #2e86c1;
+  font-size: 26px;
+  height: 10vh;
+  min-height: 42px;
+  min-width: 434px;
+  padding: 0px 15px;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-around;
+  height: 10vh;
+}
+header nav a {
+  color: white;
+  background-color: #2e86c1;
+  text-decoration: none;
+  border: 2px solid white;
+  margin: auto;
+  padding: 1vh;
+}
+header nav a:hover {
+  color: #2e86c1;
+  background-color: white;
+}
