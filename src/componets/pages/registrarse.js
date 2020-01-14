@@ -11,18 +11,24 @@ function Registrarse() {
 
     const handleSignUp = formData => {
         return signUp(formData).catch(error => {
+             let status=document.getElementById('status');
           if (error.response.status === 409) {
-            setError(
+            status.innerHTML="The email already exists. Please try again";
+               setError(
               "email",
               "conflict",
               "The email already exists. Please try again"
             );
+          }else{
+               status.innerHTML=`Algo a ido mal intentelo de nuevo Error:${error.response.status}`;
+
           }
         });
       };
     
 return (
     <React.Fragment>
+         <p id="status"></p>
         <form id="registro" onSubmit={handleSubmit(handleSignUp)}>
             <div id="regis">
         <fieldset>

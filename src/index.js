@@ -37,6 +37,9 @@ function App() {
         </header>
         <main>
         <Switch>
+        <PrivateRoute path="/user">
+          <User/>
+        </PrivateRoute>
           <Route exact path="/">
             <Inicio />
           </Route>
@@ -52,9 +55,6 @@ function App() {
           <Route path="*">
             <NotFound />
           </Route>
-        <PrivateRoute path="/user">
-          <User/>
-        </PrivateRoute>
         </Switch>
         </main>
         <footer>

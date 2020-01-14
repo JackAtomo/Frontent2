@@ -7,8 +7,7 @@ function Header() {
  
 
   const [isFormOpen, setIsFormOpen] = useState(false);
-  
-  
+ 
   return (
     <nav>
       <a href="/">Inicio </a>
@@ -17,15 +16,15 @@ function Header() {
       <a href="/contacto">Contacto</a>
       <a onClick={() => setIsFormOpen(true)}>Log in</a>
       {isFormOpen && <Login/>}
+
     </nav>
  );
 }
 
 function Login() {
+useState(true);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-
+  
 
   const { singIN } = useAuth();
   const { register, errors, formState, handleSubmit, setError } = useForm({
@@ -34,21 +33,27 @@ function Login() {
 
   const handleSignIn = formData => {
     return singIN(formData).catch(error => {
+      console.log("error")
       try{
-      if (error.response.status === 200) {
-        console.log("todo OK")
+      let statusl=document.getElementById("statusl");
+      
+      if (error.response.status === 401) {
+        statusl.innerHTML=`Contraseña o correo erroneos`;
+      }else{
+        statusl.innerHTML=`Algo a ido mal intentelo de nuevo Error:${error.response.status}`;
       }
-      }catch{
-        console.log("Algo a ido mal")
-      }
+    }catch{
+    }
     });
   };
 
   return (
+ 
   <span id="login">  
   <div>
-    <button className="close" onClick={() => setIsFormOpen(false)}>X</button>
+    <button className="close" id="close">X</button>
     <form action="" method="post" onSubmit={handleSubmit(handleSignIn)}>
+    <span id="statusl"></span>
       <fieldset>
         <label htmlFor="email">Email</label>
         <input type="text" id="email"
@@ -59,13 +64,13 @@ function Login() {
           </span>
         <label htmlFor="password">Contraseña</label>
         <input type="password" id="password"
-        ref={register(SINGIN_VALIDATIONS.PASSWORD)}
+        ref={register(SINGIN_VALIDATIONS.password)}
         name="password" />
         <span className="errorMessage">
             {errors.name && errors.name.message}
           </span>
-        <button>
-        Entrar
+        <button type="submit">
+          Entrar
         </button>
       </fieldset>
     </form>

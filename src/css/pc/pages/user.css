@@ -18,7 +18,12 @@ main #user {
   main #user #datos h2,
   #solicitud h2 {
     font-size: 160%;
+    margin: 5px;
   }
+  #solicitud h3 {
+    margin: 5px;
+  }
+
   main #user #datos h3 {
     font-size: 120%;
   }

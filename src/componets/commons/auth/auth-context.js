@@ -6,10 +6,12 @@ import { register } from "../../axios/register";
 // 1) Creamos el contexto
 const AuthContext = React.createContext();
 
+
 // Recuperamos el token del localStorage ya que si el usuario
 // refresca la página del navegador necesito iniciar la aplicación
 // con un estado autenticado
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const currentToken = JSON.parse(localStorage.getItem("currentToken"));
 
 // 2) Creamos el custom Provider
 export function AuthProvider({ children }) {
@@ -18,6 +20,7 @@ export function AuthProvider({ children }) {
   // const [role, setRole] = useState(decodeTokenAndGetRole(currentUser.token));
   const [isAuthenticated, setIsAuthenticated] = useState(currentUser !== null);
   const [user, setUser] = useState(currentUser && currentUser.user);
+  const [token, setToken] = useState(currentToken && currentToken.token);
 
   const history = useHistory();
 
@@ -27,11 +30,13 @@ export function AuthProvider({ children }) {
   const singIN = async ({ email, password }) => {
     try {
       const {
-        data: { token, user }
+        data: { accessToken, expireIN }
       } = await login(email, password);
-      setUser(user);
+      setUser(email);
+      setToken(accessToken);
+
       setIsAuthenticated(true);
-      if (token) {
+      if (accessToken) {
         history.push("/user");
       }
     } catch (error) {
@@ -65,6 +70,9 @@ export function AuthProvider({ children }) {
         phone,
         bornIn,
       });
+      ;
+      window.alert("Su registro a sido un exito");
+      history.push("/");
     } catch (error) {
       return Promise.reject(error);
     }
@@ -91,8 +99,9 @@ export function AuthProvider({ children }) {
       value={{
         isAuthenticated,
         setIsAuthenticated,
-        singIN ,
+        singIN,
         user,
+        token,
         signUp,
         logout
       }}
