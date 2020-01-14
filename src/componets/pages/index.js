@@ -4,6 +4,5 @@ import { Consultar } from "./consultar";
 import Inicio from "./inicio";
 import Contacto  from "./contacto";
 import Registrarse  from "./registrarse";
-
-
-export { Consultar, Inicio, Contacto, Registrarse};
+import User from "./user"
+export { Consultar, Inicio, Contacto, Registrarse , User};

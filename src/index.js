@@ -12,7 +12,7 @@ import "./css/index.css";
 import {Header, Footer, AuthProvider, PrivateRoute} from "./componets/commons/index";
 
 //main
-import {Consultar, Inicio, Contacto, Registrarse, Registrarse2} from "./componets/pages/index"
+import {Consultar, Inicio, Contacto, Registrarse, User} from "./componets/pages/index"
 
 
 //main//
@@ -20,20 +20,22 @@ import {Consultar, Inicio, Contacto, Registrarse, Registrarse2} from "./componet
 //componets//
 
 //header
-const headerElement = document.getElementById("header");
-ReactDOM.render(<Header />, headerElement);
+
 //header//
 //footer
-const footerElement = document.getElementById("footer");
-ReactDOM.render(<Footer />, footerElement);
+
 //footer//
 //main
-const mainElement = document.getElementById("main");
+const bodyElement = document.getElementById("body");
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <header>
+        <Header/>
+        </header>
+        <main>
         <Switch>
           <Route exact path="/">
             <Inicio />
@@ -50,10 +52,14 @@ function App() {
           <Route path="*">
             <NotFound />
           </Route>
-        </Switch>
         <PrivateRoute path="/user">
-          
+          <User/>
         </PrivateRoute>
+        </Switch>
+        </main>
+        <footer>
+          <Footer/>
+        </footer>
       </AuthProvider>
     </BrowserRouter>
   );
@@ -62,5 +68,5 @@ function NotFound() {
   return <h3>Not Found</h3>;
 }
 
-ReactDOM.render(<App />, mainElement);
+ReactDOM.render(<App />, bodyElement);
 //main//

@@ -1,0 +1,53 @@
+main #user {
+    display: flex;
+    padding: 50px;
+    justify-content: space-between;
+  }
+  main #user #datos,
+  #solicitud,
+  #acciones {
+    border: 2px solid black;
+  }
+  main #user #datos h1,
+  #solicitud h1,
+  #acciones h1 {
+    font-size: 180%;
+    margin: 0px;
+    text-align: center;
+  }
+  main #user #datos h2,
+  #solicitud h2 {
+    font-size: 160%;
+  }
+  main #user #datos h3 {
+    font-size: 120%;
+  }
+  main #user #datos fieldset,
+  #solicitud fieldset {
+    border: none;
+  }
+  
+  main #user #acciones fieldset {
+    border: none;
+    margin-top: 30px;
+  }
+  main #user #acciones fieldset button {
+    display: block;
+    font-size: 100%;
+    width: 300px;
+    margin: 10px;
+  }
+  main #user #acciones #danger {
+    border: 4px solid red;
+  }
+  main #user #solicitud {
+    text-align: center;
+  }
+  main #user #solicitud input,
+  textarea {
+    width: 300px;
+  }
+  main #user #solicitud textarea {
+    height: 150px;
+  }
+  
