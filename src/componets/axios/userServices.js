@@ -16,8 +16,13 @@ export function updateDatos(token,datos) {
   //);
 }
 
-export function buySeguro(token,id_seguro,precio) {
-  //return axios.post(`${process.env.REACT_APP_BACKEND_URL}/notes`, note);
+export function buySeguro(token,type,precio) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  precio=Number.parseFloat(precio).toFixed(2);
+  return axios.post(`https://be-seguros-subir.herokuapp.com/api/insurances`,{
+    "policyType":type,
+    "price": precio,
+  });
 }
 export function solicitarAsistencia(token,asistencia,precio) {
     //return axios.post(`${process.env.REACT_APP_BACKEND_URL}/notes`, note);

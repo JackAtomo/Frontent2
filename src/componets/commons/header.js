@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 function Header() {
  
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
- 
+const [isFormOpen, setIsFormOpen] = useState(false);
+  
   return (
     <nav>
       <a href="/">Inicio </a>
@@ -15,14 +15,13 @@ function Header() {
       <a href="/registrarse">Registrarse</a>
       <a href="/contacto">Contacto</a>
       <a onClick={() => setIsFormOpen(true)}>Log in</a>
-      {isFormOpen && <Login/>}
+      {isFormOpen && <Login />}
 
     </nav>
  );
 }
 
-function Login() {
-useState(true);
+function Login(props) {
 
   
 
@@ -51,7 +50,9 @@ useState(true);
  
   <span id="login">  
   <div>
-    <button className="close" id="close">X</button>
+    <button onClick={()=>{let login = document.getElementById('login');
+ login.innerHTML=""  
+  login.parentNode.removeChild(login)}} className="close" id="close">X</button>
     <form action="" method="post" onSubmit={handleSubmit(handleSignIn)}>
     <span id="statusl"></span>
       <fieldset>
@@ -69,7 +70,7 @@ useState(true);
         <span className="errorMessage">
             {errors.name && errors.name.message}
           </span>
-        <button type="submit">
+        <button type="submit" disabled={formState.isSubmitting}>
           Entrar
         </button>
       </fieldset>

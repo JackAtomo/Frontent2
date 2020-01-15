@@ -37,7 +37,11 @@ export function AuthProvider({ children }) {
 
       setIsAuthenticated(true);
       if (accessToken) {
+        if(email =="admin@yopmail.com"){
+        history.push("/admin")
+        }else{
         history.push("/user");
+      }
       }
     } catch (error) {
       return Promise.reject(error);

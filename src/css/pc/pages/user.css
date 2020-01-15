@@ -42,7 +42,7 @@ main #user {
     width: 300px;
     margin: 10px;
   }
-  main #user #acciones #danger {
+  main #user #acciones .danger {
     border: 4px solid red;
   }
   main #user #solicitud {

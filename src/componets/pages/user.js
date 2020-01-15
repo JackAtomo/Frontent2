@@ -1,18 +1,19 @@
-import React from "react"
-
-import {getDatos, deleteAcount} from "../axios/userServices";
+import React, {useState} from "react"
+import { useForm } from "react-hook-form";
+import {getDatos, deleteAcount, buySeguro} from "../axios/userServices";
 import { useAuth } from "../commons/auth/auth-context";
 
 function User() {
-  
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const {token} = useAuth();
   
   
   let login = document.getElementById('login');
- login.innerHTML=""  
+ if(login!=null){
+  login.innerHTML=""  
   login.parentNode.removeChild(login);
-  
+}
   
  
 
@@ -76,17 +77,16 @@ function User() {
           <span id="acciones">
             <h1>Acciones</h1>
             <fieldset>
-              <button>Cambiar Datos</button>
-              <button>Contratar Seguro</button>
-              
-
+              <button >Cambiar Datos</button> 
+              {Contratar(token)}
             </fieldset>
             <fieldset>
-            <button> Dar de baja poliza</button>
-              <button id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
+            <button class="danger"> Dar de baja poliza</button>
+              <button class="danger" id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
             </fieldset>
           </span>
         </section>
+        
       </React.Fragment>
     );
   }
@@ -94,11 +94,27 @@ function User() {
 
 export default User;
 
+function Contratar(token){
+  const { register, errors, formState, handleSubmit, setError } = useForm({
+    mode: "onBlur" // Lanza validaciones cada vez que hago blur
+  });
+  return(
+    <span> 
+    <form action="" method="post" onSubmit={handleSubmit(buyInsur(token))}>
+    <select id="types">
+<option value="1">Basico</option>
+<option selected value="2">Reforzado</option>
+<option value="3">Premiun</option>
+    </select>
+    <button id="contratar" >Contratar Seguro</button> 
+    </form>
+    </span> )
+}
 
 async function del(token){
   let respon = await deleteAcount(token)
     if(await respon ){
-      window.location("")
+      window.location.href="https://segurosalud.herokuapp.com/"
     }
  }
  
@@ -136,4 +152,59 @@ const values= Object.values(data)
   }
 
     
+  }
+    
+   async function buyInsur(token){
+     if(document.getElementById("types")!=null){
+    let type=document.getElementById("types").value
+      let precio= await calcularPrecio(await type);
+      return  buySeguro(token,type,precio).catch(error => {
+        console.log("error")
+        try{
+        let statusl=document.getElementById("statusl");
+          statusl.innerHTML=`Algo a ido mal intentelo de nuevo Error:${error.response.status}`;
+      
+      }catch{
+      }
+      });
+    }
+    };
+  
+ 
+   function calcularPrecio(type) {
+    let dob = document.getElementById("dob").innerHTML;
+    let pais =  document.getElementById("born_in").innerHTML;
+    let sexo =  document.getElementById("gender").innerHTML;
+    
+    let today = new Date();
+    let year = today.getFullYear();
+    var res = dob.split("-")
+    let edad= year-res[0]
+    let incremento = 0;
+    let precio=0
+    switch (type) {
+      case "1":
+    precio = 10;
+        break;
+      case "2":
+    precio = 20;
+      break;
+      case "3":
+    precio = 30;
+      break;
+      }
+    
+    if (edad == 50 || edad < 30) {
+      incremento = incremento + 16.66;
+    }
+    if (pais !== "Spain") {
+      incremento = incremento + 33.33;
+    }
+    if (sexo == "Hombre") {
+      incremento = incremento + 33.33;
+    }
+    incremento = (incremento + 100) / 100;
+    precio = Math.round(precio * incremento * 100) / 100;
+ 
+    return precio;
   }
