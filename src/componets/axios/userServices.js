@@ -3,10 +3,10 @@ import { useAuth } from "../commons/auth/auth-context";
 
 
 export function getDatos(token) {
-  axios.defaults.headers.common['Authorization'] = {Bearer:token};
-
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   return axios.get(`https://be-seguros-subir.herokuapp.com/api/accounts`,{
   });
+  
 }
 
 export function updateDatos(token,datos) {
@@ -25,5 +25,7 @@ export function solicitarAsistencia(token,asistencia,precio) {
 
 
 export function deleteAcount(token) {
-  //return axios.delete(`${process.env.REACT_APP_BACKEND_URL}//${noteId}`);
+  console.log("va")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios.delete(`https://be-seguros-subir.herokuapp.com/api/accounts`);
 }

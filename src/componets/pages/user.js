@@ -1,26 +1,60 @@
 import React from "react"
-import {getDatos} from "../axios/userServices";
+
+import {getDatos, deleteAcount} from "../axios/userServices";
 import { useAuth } from "../commons/auth/auth-context";
 
 function User() {
-  let login = document.getElementById('login');
-  login.innerHTML=""  
-  login.parentNode.removeChild(login);
+  
 
   const {token} = useAuth();
+  
+  
+  let login = document.getElementById('login');
+ login.innerHTML=""  
+  login.parentNode.removeChild(login);
+  
+  
+ 
 
+  Datos()
   return (
       <React.Fragment>
         <section id="user">
-
-
   <span id="datos">
   <h1>Mis Datos:</h1>
-  {Datos(token)}
-  
-</span>
-
-
+  <fieldset>
+  <h2 id="first_name"></h2>
+    <h3 id="last_name"></h3>
+  </fieldset>
+  <fieldset>
+    <label>Phone:</label>
+<label id="phone"></label>
+  </fieldset>
+  <fieldset>
+    <label>email:</label>
+<label id="email"></label>
+  </fieldset>
+  <fieldset>
+    <label>gender:</label>
+<label id="gender"></label>
+  </fieldset>
+  <fieldset>
+    <label>Direccion:</label>
+    <label id="address"></label>
+  </fieldset>
+  <fieldset>
+    <label>Fecha de nacimiento:</label>
+<label id="dob"></label>
+  </fieldset>
+  <fieldset>
+    <label>Born IN:</label>
+<label id="born_in"></label>
+  </fieldset>
+  <fieldset>
+    <label>Codigo Postal:</label>
+<label id="postal_code"></label>
+  </fieldset>
+  </span>
           <span id="solicitud">
             <h1>Solicitar asistencia:</h1>
             <fieldset>
@@ -44,9 +78,12 @@ function User() {
             <fieldset>
               <button>Cambiar Datos</button>
               <button>Contratar Seguro</button>
+              
+
             </fieldset>
             <fieldset>
-              <button id="danger" >Cancelar Cuenta</button>
+            <button> Dar de baja poliza</button>
+              <button id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
             </fieldset>
           </span>
         </section>
@@ -58,84 +95,45 @@ function User() {
 export default User;
 
 
-function Datos(token){
-    const  {
-      firstName,
-      lastName,
-      email,
-      password,
-      gender,
-      dob,
-      address,
-      postalCode,
-      phone,
-      bornIn,
-    } =  get(token);
-
-
-  return(
-  <React.Fragment>
-  <fieldset>
-    <h2 id="name">{firstName}</h2>
-    <h3 id="apellidos">{lastName}</h3>
-  </fieldset>
-  <fieldset>
-    <label>Phone:</label>
-<label id="phone">{phone}</label>
-  </fieldset>
-  <fieldset>
-    <label>Email:</label>
-<label id="email">{email}</label>
-  </fieldset>
-  <fieldset>
-    <label>Genero:</label>
-<label id="gender">{gender}</label>
-  </fieldset>
-  <fieldset>
-    <label>Direccion:</label>
-    <label id="address">{address}</label>
-  </fieldset>
-  <fieldset>
-    <label>Fecha de nacimiento:</label>
-<label id="dob">{dob}</label>
-  </fieldset>
-  <fieldset>
-    <label>Born IN:</label>
-<label id="bornin">{bornIn}</label>
-  </fieldset>
-  <fieldset>
-    <label>Codigo Postal:</label>
-<label id="cp">{postalCode}</label>
-  </fieldset>
-  </React.Fragment>
-  );
-}
+async function del(token){
+  let respon = await deleteAcount(token)
+    if(await respon ){
+      window.location("")
+    }
+ }
+ 
   
   
 
-const get = async (token)=> {
+ async function Datos(){
   
-  try{
-    const {datos:{
-      firstName,
-      lastName,
-      email,
-      gender,
-      dob,
-      address,
-      postalCode,
-      phone,
-      bornIn}
-    } =  await getDatos(token);
+  const {token} = useAuth();
+  const  response = await getDatos(token);
+  const data= response.data.Datos
+  await response;
+    console.log(data);
+    document.getElementById("first_name").innerHTML= await data.first_name
+  const keys = Object.keys(data)
+const values= Object.values(data)
+  for (let index = 0; index < keys.length; index++) {
+    if(keys[index]=="gender"){
+      let value=null
+      switch (values[index]) {
+        case 0:
+        value[index] ="Mujer";
+        break;
+        case 1:
+        values[index]="Hombre";
+        break;
+    }
+  }else if (keys[index]=="dob") {
+    var res = values[index].split("T") 
+    values[index]=res[0];
+  }
 
-return{firstName,
-  lastName,
-  email,
-  gender,
-  dob,
-  address,
-  postalCode,
-  phone,
-  bornIn}
-  }catch{return <h1>Algo a ido mal</h1>}
+    document.getElementById(`${keys[index]}`).innerHTML= values[index]
+
+  }
+
+    
   }
