@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { useForm } from "react-hook-form";
-import {getDatos, deleteAcount, buySeguro} from "../axios/userServices";
+import {getDatos, deleteAcount, buySeguro, getPolices} from "../axios/userServices";
 import { useAuth } from "../commons/auth/auth-context";
 
 function User() {
@@ -15,8 +15,7 @@ function User() {
   login.parentNode.removeChild(login);
 }
   
- 
-
+  Poliza(token)
   Datos()
   return (
       <React.Fragment>
@@ -55,7 +54,29 @@ function User() {
     <label>Codigo Postal:</label>
 <label id="postal_code"></label>
   </fieldset>
+  <fieldset>
+    <p>
+
+    </p>
+  </fieldset>
   </span>
+  <span id="poliza">
+  <h1 id="mis_polizas">Mis Poliza:</h1>
+  
+  <fieldset id="polizas"/>
+  <h1>Contratar nueva Poliza</h1>
+  
+  <fieldset id="contratar">
+  {Contratar(token)}
+  </fieldset>
+
+  <h1> Cancelación</h1>
+  <fieldset>
+  <button class="danger" id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
+
+  </fieldset>
+  </span>
+ 
           <span id="solicitud">
             <h1>Solicitar asistencia:</h1>
             <fieldset>
@@ -77,12 +98,12 @@ function User() {
           <span id="acciones">
             <h1>Acciones</h1>
             <fieldset>
+              <a href="localhost/user/datos">
               <button >Cambiar Datos</button> 
-              {Contratar(token)}
+             </a> 
             </fieldset>
             <fieldset>
             <button class="danger"> Dar de baja poliza</button>
-              <button class="danger" id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
             </fieldset>
           </span>
         </section>
@@ -101,6 +122,7 @@ function Contratar(token){
   return(
     <span> 
     <form action="" method="post" onSubmit={handleSubmit(buyInsur(token))}>
+    <label>Tipo de Seguro:</label>
     <select id="types">
 <option value="1">Basico</option>
 <option selected value="2">Reforzado</option>
@@ -156,6 +178,7 @@ const values= Object.values(data)
     
    async function buyInsur(token){
      if(document.getElementById("types")!=null){
+    document.getElementById("contratar").diabled=true
     let type=document.getElementById("types").value
       let precio= await calcularPrecio(await type);
       return  buySeguro(token,type,precio).catch(error => {
@@ -167,7 +190,7 @@ const values= Object.values(data)
       }catch{
       }
       });
-    }
+    } 
     };
   
  
@@ -208,3 +231,33 @@ const values= Object.values(data)
  
     return precio;
   }
+   async function Poliza(token){
+     let response = await getPolices(token)
+    let policies = response.data;
+    for (const policie of policies) {
+      let type=policie.policyType
+      switch (type) {
+        case 1:
+          type="Basico"
+          break;
+          case 2:
+          type="Reforzado"
+          break;
+          case 3:
+          type="Premiun"
+          break;
+      }
+      let output = `<fieldset>
+      <label>Numero de Poliza:</label>
+      <label>${policie.policyNumber}</label>
+      </fieldset>
+      <fieldset>
+      <label>Tipo de seguro:</label>
+      <label>${type}<label>
+      </fieldset>
+      <fieldset>
+      </fieldset>` 
+      console.log(policie)
+    document.getElementById("polizas").innerHTML= output + document.getElementById("polizas").innerHTML;
+    }
+    }

@@ -40,6 +40,9 @@ function App() {
         <PrivateRoute path="/user">
           <User/>
         </PrivateRoute>
+        <PrivateRoute path="/user/datos">
+          <User/>
+        </PrivateRoute>
           <Route exact path="/">
             <Inicio />
           </Route>
@@ -57,9 +60,6 @@ function App() {
           </Route>
         </Switch>
         </main>
-        <footer>
-          <Footer/>
-        </footer>
       </AuthProvider>
     </BrowserRouter>
   );
