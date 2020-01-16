@@ -56,7 +56,7 @@ function User() {
   </fieldset>
   <fieldset>
     <p>
-
+    <button class="danger" id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
     </p>
   </fieldset>
   </span>
@@ -72,7 +72,8 @@ function User() {
 
   <h1> Cancelación</h1>
   <fieldset>
-  <button class="danger" id="danger" onClick={()=>del(token)} >Cancelar Cuenta</button>
+
+  <button class="danger"> Dar de baja poliza</button>
 
   </fieldset>
   </span>
@@ -103,7 +104,6 @@ function User() {
              </a> 
             </fieldset>
             <fieldset>
-            <button class="danger"> Dar de baja poliza</button>
             </fieldset>
           </span>
         </section>
@@ -114,6 +114,29 @@ function User() {
 
 
 export default User;
+
+function BajaPoliza(token){
+  const { register, errors, formState, handleSubmit, setError } = useForm({
+    mode: "onBlur" // Lanza validaciones cada vez que hago blur
+  });
+  
+    async function Optiones(){
+      let response = await getPolices(token)
+      let policies = response.data;
+      console.log(policies);
+    }
+
+  return(
+    <span> 
+    <form action="" method="post" onSubmit={handleSubmit(buyInsur(token))}>
+    <label>Mis polizas:</label>
+    <select id="types">
+    {<Optiones/>}
+    </select>
+    <button id="contratar" >Contratar Seguro</button> 
+    </form>
+    </span> )
+}
 
 function Contratar(token){
   const { register, errors, formState, handleSubmit, setError } = useForm({
@@ -155,10 +178,9 @@ async function del(token){
 const values= Object.values(data)
   for (let index = 0; index < keys.length; index++) {
     if(keys[index]=="gender"){
-      let value=null
       switch (values[index]) {
         case 0:
-        value[index] ="Mujer";
+        values[index] ="Mujer";
         break;
         case 1:
         values[index]="Hombre";
