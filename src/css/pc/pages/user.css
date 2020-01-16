@@ -50,7 +50,7 @@ main #user {
   }
   main #user #solicitud input,
   textarea {
-    width: 300px;
+    width: 250px;
   }
   main #user #solicitud textarea {
     height: 150px;
@@ -68,4 +68,7 @@ main #user {
   }
   #mis_polizas{
 margin-top:0px;
+  }
+  #poliza{
+    text-align: center;
   }

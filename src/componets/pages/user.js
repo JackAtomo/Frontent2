@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { useForm } from "react-hook-form";
-import {getDatos, deleteAcount, buySeguro, getPolices} from "../axios/userServices";
+import {getDatos, solicitarAsistencia, deleteAcount, buySeguro, getPolices, cancelPolice} from "../axios/userServices";
 import { useAuth } from "../commons/auth/auth-context";
 
 function User() {
@@ -72,8 +72,7 @@ function User() {
 
   <h1> Cancelación</h1>
   <fieldset>
-
-  <button class="danger"> Dar de baja poliza</button>
+{BajaPoliza(token)}
 
   </fieldset>
   </span>
@@ -90,18 +89,18 @@ function User() {
             </fieldset>
             <fieldset>
               <h3>Precio Estimado</h3>
-              <input type="number" />
+              <input type="number" id="price"/>
             </fieldset>
             <fieldset>
-              <button>Enviar</button>
+              <button onClick={()=>enviar(token)}>Enviar</button>
             </fieldset>
           </span>
           <span id="acciones">
             <h1>Acciones</h1>
             <fieldset>
-              <a href="localhost/user/datos">
+            {formDatos(token)}
               <button >Cambiar Datos</button> 
-             </a> 
+            
             </fieldset>
             <fieldset>
             </fieldset>
@@ -115,27 +114,84 @@ function User() {
 
 export default User;
 
-function BajaPoliza(token){
-  const { register, errors, formState, handleSubmit, setError } = useForm({
-    mode: "onBlur" // Lanza validaciones cada vez que hago blur
-  });
-  
-    async function Optiones(){
-      let response = await getPolices(token)
-      let policies = response.data;
-      console.log(policies);
-    }
+function formDatos(token){
+if(document.getElementById("datos")!=null){
+let first_name=document.getElementById("first_name").innerHTML
+let last_name=document.getElementById("last_name").innerHTML
+let email=document.getElementById("email").innerHTML
+let gender=document.getElementById("gender").innerHTML
+let dob=document.getElementById("dob").innerHTML
+let address=document.getElementById("address").innerHTML
+let postal_code=document.getElementById("postal_code").innerHTML
+let phone=document.getElementById("phone").innerHTML
 
+
+
+
+
+}
+}
+
+
+async function enviar(token){
+let title=document.getElementById("title").value
+let description=document.getElementById("description").value
+let price=document.getElementById("price").value
+let content=`${title}:${description}.Price:${price}`;
+try{ 
+await solicitarAsistencia(token,content);
+ document.getElementById("title").value=""
+ document.getElementById("description").value=""
+ document.getElementById("price").value=""
+ window.alert("Solicitud Enviada");
+}catch{
+  window.alert("Algo a ido mal intentelo de nuevo");
+}
+
+}
+
+function BajaPoliza(token){
+   
+      async function Optiones(token){
+      let response = await  getPolices(token)
+      let policies = response.data;
+      document.getElementById("policies").innerHTML=""
+      let out=""
+      for (const police of policies) {
+        let out=`<option value="${police.policyId}">${police.policyNumber}</option>`;
+    document.getElementById("policies").innerHTML= out +   document.getElementById("policies").innerHTML;
+        
+      }
+    }
+      async function cancel(token){
+        console.log("cancel");
+if(document.getElementById("policies")!=null){
+        let id= document.getElementById("policies").value
+       try{
+        await cancelPolice(token,id);
+        window.alert("Poliza borrada");
+        Poliza(token)
+        Optiones(token)
+       }catch{
+        window.alert("Algo a ido mal intentelo de nuevo");
+
+       }
+      }}
+      
+    
+    Optiones(token)
   return(
     <span> 
-    <form action="" method="post" onSubmit={handleSubmit(buyInsur(token))}>
+    
     <label>Mis polizas:</label>
-    <select id="types">
-    {<Optiones/>}
+    <select id="policies">
+    
     </select>
-    <button id="contratar" >Contratar Seguro</button> 
-    </form>
-    </span> )
+    <button id="cotratar" onClick={()=>cancel(token)} className="danger">Cancelar Seguro </button> 
+  
+    </span>
+      )
+
 }
 
 function Contratar(token){
@@ -203,15 +259,15 @@ const values= Object.values(data)
     document.getElementById("contratar").diabled=true
     let type=document.getElementById("types").value
       let precio= await calcularPrecio(await type);
-      return  buySeguro(token,type,precio).catch(error => {
-        console.log("error")
-        try{
-        let statusl=document.getElementById("statusl");
-          statusl.innerHTML=`Algo a ido mal intentelo de nuevo Error:${error.response.status}`;
-      
-      }catch{
-      }
-      });
+      try{
+        await buySeguro(token,type,precio)
+        window.alert("Seguro adquirido con exito");
+        Poliza(token)
+  }catch{
+    window.alert("Algo a ido mal intentelo de nuevo");
+
+  }
+
     } 
     };
   
@@ -256,6 +312,8 @@ const values= Object.values(data)
    async function Poliza(token){
      let response = await getPolices(token)
     let policies = response.data;
+    document.getElementById("polizas").innerHTML= "";
+
     for (const policie of policies) {
       let type=policie.policyType
       switch (type) {

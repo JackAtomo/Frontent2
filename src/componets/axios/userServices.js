@@ -9,6 +9,13 @@ export function getDatos(token) {
   
 }
 
+
+export function cancelPolice (token, id) {
+  console.log("va")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios.delete(`https://be-seguros-subir.herokuapp.com/api/insurances/${id}`);
+}
+
 export function updateDatos(token,datos) {
   
   //return axios.put(`${process.env.REACT_APP_BACKEND_URL}/notes/${note.id}`,
@@ -24,8 +31,12 @@ export function buySeguro(token,type,precio) {
     'policyPrice': precio,
   });
 }
-export function solicitarAsistencia(token,asistencia,precio) {
-    //return axios.post(`${process.env.REACT_APP_BACKEND_URL}/notes`, note);
+export function solicitarAsistencia(token,content) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios.post(`https://be-seguros-subir.herokuapp.com/api/services`, {
+    "content":content
+  });
+    
   }
 
   export function getPolices(token) {
