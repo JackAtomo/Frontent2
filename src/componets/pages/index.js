@@ -5,4 +5,5 @@ import Inicio from "./inicio";
 import Contacto  from "./contacto";
 import Registrarse  from "./registrarse";
 import User from "./user"
-export { Consultar, Inicio, Contacto, Registrarse , User};
+import {Admin} from "./admin"
+export { Consultar, Inicio, Contacto, Registrarse , User, Admin };

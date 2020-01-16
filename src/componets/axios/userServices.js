@@ -17,10 +17,10 @@ export function cancelPolice (token, id) {
 }
 
 export function updateDatos(token,datos) {
-  
-  //return axios.put(`${process.env.REACT_APP_BACKEND_URL}/notes/${note.id}`,
-    //datos
-  //);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios.put(`https://be-seguros-subir.herokuapp.com/api/accounts`,
+    datos
+  );
 }
 
 export function buySeguro(token,type,precio) {

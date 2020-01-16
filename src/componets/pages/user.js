@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { useForm } from "react-hook-form";
-import {getDatos, solicitarAsistencia, deleteAcount, buySeguro, getPolices, cancelPolice} from "../axios/userServices";
+import {getDatos,updateDatos, solicitarAsistencia, deleteAcount, buySeguro, getPolices, cancelPolice} from "../axios/userServices";
 import { useAuth } from "../commons/auth/auth-context";
 
 function User() {
@@ -97,12 +97,14 @@ function User() {
           </span>
           <span id="acciones">
             <h1>Acciones</h1>
-            <fieldset>
-            {formDatos(token)}
-              <button >Cambiar Datos</button> 
+            <fieldset id="cambiar_datos">
             
+              <button onClick={()=>formDatos()} >Cambiar Datos</button> 
             </fieldset>
+
             <fieldset>
+            <button  id="cambio" onClick={()=>mofify(token)} >Modificar Datos</button>
+
             </fieldset>
           </span>
         </section>
@@ -114,22 +116,86 @@ function User() {
 
 export default User;
 
-function formDatos(token){
-if(document.getElementById("datos")!=null){
+async function mofify(token){
+  let firstName=document.getElementById("c_first_name").value
+  let lastName=document.getElementById("c_last_name").value
+  let email=document.getElementById("c_email").value
+  let DOB=document.getElementById("c_dob").value
+  let address=document.getElementById("c_address").value
+  let postalCode=document.getElementById("c_postal_code").value
+  let phone=document.getElementById("c_phone").value
+  let bornIn=document.getElementById("c_BorIn").value
+  let password=document.getElementById("c_password").value
+  let gender=document.getElementById("c_gender").value
+  try{  
+  await updateDatos(token,{firstName, lastName,email,password,gender,DOB,address,postalCode,phone,bornIn})
+  window.alert("Datos actualizados con exito");
+  window.location.href="https://segurosalud.herokuapp.com/"
+  }catch{
+    window.alert("Algo a ido mal intentalo de nuevo");
+    
+  }
+  
+
+}
+
+
+function formDatos(){
 let first_name=document.getElementById("first_name").innerHTML
 let last_name=document.getElementById("last_name").innerHTML
 let email=document.getElementById("email").innerHTML
-let gender=document.getElementById("gender").innerHTML
 let dob=document.getElementById("dob").innerHTML
 let address=document.getElementById("address").innerHTML
 let postal_code=document.getElementById("postal_code").innerHTML
 let phone=document.getElementById("phone").innerHTML
+let BorIn=document.getElementById("born_in").innerHTML
+document.getElementById("cambiar_datos").innerHTML=`
+<fieldset>
+  <label>Nombre</label>
+  <input type="text" required id="c_first_name" value=${first_name}>
+  </fieldset>
+  <fieldset>
+  <label>Apellidos</label>
+  <input type="text" required id="c_last_name" value=${last_name}>
+  </fieldset>
+  <fieldset>
+  <label>Email</label>
+  <input type="text" required id="c_email" value=${email}>
+  </fieldset>
+  <fieldset>
+  <label>Password</label>
+  <input type="password" required id="c_password">
+  </fieldset>
+  <fieldset>
+  <label>Genero</label>
+  <select id="c_gender" required>
+    <option value="0">Hombre</option>
+    <option value="1">Mujer</option>
+  </select>  
+  </fieldset>
+  <fieldset>
+  <label>Fecha de nacimiento</label>
+  <input required type="date" value=${dob} id="c_dob">
+  </fieldset>
+  <fieldset>
+  <label>Direccion</label>
+  <input required type="text" id="c_address" value=${address}>
+  </fieldset>
+  <fieldset>
+  <label>Codigo Postal</label>
+  <input required type="text" id="c_postal_code" value=${postal_code}>
+  </fieldset>
+  <fieldset>
+  <label>Telefono</label>
+  <input type="text" required id="c_phone" value=${phone}>
+  </fieldset>
+  <fieldset>
+  <label>BorIn</label>
+  <input type="text" required id="c_BorIn" value=${BorIn}>
+  </fieldset>
+  `;
+  document.getElementById("cambio").style="visibility:visible"
 
-
-
-
-
-}
 }
 
 
@@ -144,6 +210,7 @@ await solicitarAsistencia(token,content);
  document.getElementById("description").value=""
  document.getElementById("price").value=""
  window.alert("Solicitud Enviada");
+
 }catch{
   window.alert("Algo a ido mal intentelo de nuevo");
 }
@@ -174,7 +241,6 @@ if(document.getElementById("policies")!=null){
         Optiones(token)
        }catch{
         window.alert("Algo a ido mal intentelo de nuevo");
-
        }
       }}
       

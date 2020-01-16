@@ -9,10 +9,10 @@ import "./css/index.css";
 
 //componets//
 
-import {Header, Footer, AuthProvider, PrivateRoute} from "./componets/commons/index";
+import {Header, AuthProvider, PrivateRoute} from "./componets/commons/index";
 
 //main
-import {Consultar, Inicio, Contacto, Registrarse, User} from "./componets/pages/index"
+import {Consultar, Inicio, Contacto, Registrarse, User, Admin} from "./componets/pages/index"
 
 
 //main//
@@ -40,8 +40,8 @@ function App() {
         <PrivateRoute path="/user">
           <User/>
         </PrivateRoute>
-        <PrivateRoute path="/user/datos">
-          <User/>
+        <PrivateRoute path="/admin">
+          <Admin/>
         </PrivateRoute>
           <Route exact path="/">
             <Inicio />

@@ -34,7 +34,8 @@ main #user {
   
   main #user #acciones fieldset {
     border: none;
-    margin-top: 30px;
+    display: block;
+    text-align: center;
   }
   main #user  fieldset button {
     display: block;
@@ -59,10 +60,7 @@ main #user {
     border: none;
 
   }
-  main #acciones form{
-    border: 1px solid black;
-    padding: 10px;
-  }
+  
   main #contratar {
   text-align: center;  
   }
@@ -71,4 +69,15 @@ margin-top:0px;
   }
   #poliza{
     text-align: center;
+  }
+  main #user #acciones fieldset input {
+    display: block;
+    margin: auto;
+  }
+  main #user #acciones fieldset select {
+    text-align: center;
+    margin: auto;
+  }
+  #cambio{
+    visibility: hidden;
   }
