@@ -3,7 +3,6 @@ main #registro{
     text-align: center;
 }
 main #registro #regis{
-    display: flex;
     justify-content: center;
     text-align: center;
     border:none;
@@ -22,7 +21,8 @@ main #registro #regis input, select{
 }
 main #registro #regis fieldset{
     margin:20px;
-    padding: 50px;
+    padding: 25px;
+    margin-top: 25px;
     background-color: #2e86c1;
     color :white;
 }

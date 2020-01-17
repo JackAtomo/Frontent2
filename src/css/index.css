@@ -1,2 +1,5 @@
 /*pc*/
-@import url("./pc/index.css");
+  /*  @import url("./pc/index.css");*/
+    @import url("./pc/index.css") only screen and (min-width: 1260px);
+    @import url("./m_pc/index.css") only screen and (max-width: 1260px) and (min-width: 625px);
+    @import url("./mobile/index.css") only screen and (max-width: 625px) and (min-width: 10px);

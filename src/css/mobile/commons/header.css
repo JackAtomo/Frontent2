@@ -7,11 +7,8 @@ main {
 header {
   border: 1px solid blue;
   background: #2e86c1;
-  font-size: 26px;
   height: 10vh;
-  min-height: 42px;
-  min-width: 434px;
-  padding: 0px 15px;
+width: 100vw;
 }
 
 header nav {
@@ -30,9 +27,4 @@ header nav a {
 header nav a:hover {
   color: #2e86c1;
   background-color: white;
-}
-#statusl{
-  color: red;
-  text-align: center;
-  margin: auto;
 }

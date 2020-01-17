@@ -22,20 +22,24 @@ function User() {
         <section id="user">
   <span id="datos">
   <h1>Mis Datos:</h1>
-  <fieldset>
+  <fieldset >
+  <h2 >Nombre:</h2>
   <h2 id="first_name"></h2>
+  </fieldset>
+  <fieldset >
+  <h3>Apellidos:</h3>
     <h3 id="last_name"></h3>
   </fieldset>
   <fieldset>
-    <label>Phone:</label>
+    <label>Telefono:</label>
 <label id="phone"></label>
   </fieldset>
   <fieldset>
-    <label>email:</label>
+    <label>Email:</label>
 <label id="email"></label>
   </fieldset>
   <fieldset>
-    <label>gender:</label>
+    <label>Genero:</label>
 <label id="gender"></label>
   </fieldset>
   <fieldset>
@@ -47,7 +51,7 @@ function User() {
 <label id="dob"></label>
   </fieldset>
   <fieldset>
-    <label>Born IN:</label>
+    <label>Nacido en:</label>
 <label id="born_in"></label>
   </fieldset>
   <fieldset>
@@ -61,7 +65,7 @@ function User() {
   </fieldset>
   </span>
   <span id="poliza">
-  <h1 id="mis_polizas">Mis Poliza:</h1>
+  <h1 id="mis_polizas">Mis Polizas:</h1>
   
   <fieldset id="polizas"/>
   <h1>Contratar nueva Poliza</h1>
@@ -130,7 +134,7 @@ async function mofify(token){
   try{  
   await updateDatos(token,{firstName, lastName,email,password,gender,DOB,address,postalCode,phone,bornIn})
   window.alert("Datos actualizados con exito");
-  window.location.href="https://segurosalud.herokuapp.com/"
+  window.location.href="http://localhost:3000"
   }catch{
     window.alert("Algo a ido mal intentalo de nuevo");
     
@@ -281,7 +285,7 @@ function Contratar(token){
 async function del(token){
   let respon = await deleteAcount(token)
     if(await respon ){
-      window.location.href="https://segurosalud.herokuapp.com/"
+      window.location.href="http://localhost:3000"
     }
  }
  

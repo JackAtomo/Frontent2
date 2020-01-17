@@ -1,0 +1,20 @@
+#contacto {
+  padding: 0px;
+  height: 75vh;
+  justify-content: space-between;
+  text-align: center;
+}
+main .partida {
+  margin: auto;
+  max-width: 75vh;
+  margin-top: 50px;
+  max-width: 90vw;
+}
+main .partida iframe{
+  width: 65vw;
+  height: 400px;
+  border:0;
+}
+main .partida img{
+  width: 80vw;
+}
