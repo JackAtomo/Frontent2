@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { useAuth } from "../commons/auth/auth-context";
-import {getService} from "../axios/adminServices"
+import {getService,rechazarsolicitud,aceptarsolicicitud } from "../axios/adminServices"
 function Admin() {
 
   const {token} = useAuth();
@@ -23,6 +23,9 @@ function Admin() {
  <fieldset id="solicitudes">
      
  </fieldset>
+ <fieldset id="action">
+ {Rechazar(token)}
+ </fieldset>
  </React.Fragment>)
 }
 export {Admin};
@@ -41,3 +44,65 @@ async function solicitudes(token){
    document.getElementById("solicitudes").innerHTML= output + document.getElementById("solicitudes").innerHTML;
    }
    }
+
+   function Rechazar(token){
+   
+    async function Optiones(token){
+    let response = await  getService(token)
+    let services = response.data;
+    document.getElementById("services").innerHTML=""
+    let out=""
+    for (const service of services) {
+      let out=`<option value="${service.id}">${service.id}</option>`;
+  document.getElementById("services").innerHTML= out +   document.getElementById("services").innerHTML;
+      
+    }
+  }
+    async function cancel(token){
+      console.log("cancel");
+if(document.getElementById("services")!=null){
+      let id= document.getElementById("services").value
+     try{
+      await rechazarsolicitud(token,id);
+      window.alert("Solicitud rechazada");
+      solicitudes(token)
+      Optiones(token)
+     }catch{
+      window.alert("Algo a ido mal intentelo de nuevo");
+     }
+    }}
+    async function agree(token){
+      console.log("cancel");
+if(document.getElementById("services")!=null){
+      let id= document.getElementById("services").value
+     try{
+      await aceptarsolicicitud(token,id);
+      window.alert("Solicitud aceptada");
+      solicitudes(token)
+      Optiones(token)
+     }catch{
+      window.alert("Algo a ido mal intentelo de nuevo");
+     }
+    }}
+    
+    
+  
+  Optiones(token)
+return(
+  <span> 
+  
+  <label>Mis polizas:</label>
+  <select id="services">
+  
+  </select>
+  <button id="cancel" onClick={()=>cancel(token)} className="danger">Rechazar</button> 
+  <button id="agree" onClick={()=>agree(token)} className="agree">Aceptar</button> 
+
+  </span>
+    )
+
+}
+
+
+
+ 

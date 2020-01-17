@@ -253,7 +253,7 @@ if(document.getElementById("policies")!=null){
     <select id="policies">
     
     </select>
-    <button id="cotratar" onClick={()=>cancel(token)} className="danger">Cancelar Seguro </button> 
+    <button id="cancel" onClick={()=>cancel(token)} className="danger">Cancelar Seguro </button> 
   
     </span>
       )
